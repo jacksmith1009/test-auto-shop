@@ -3,11 +3,13 @@ const User = require("../models/User");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const sendEmail = require("../utils/nodeMailerHelpers");
+const generator = require('generate-password');
+
 
 // Lets create our fisrt route --  We will signUp a user
 router.post("/signUp", async (req, res) => {
   try {
-    const { name, email, password } = req.body;
+    const { name, email } = req.body;
 
     const userExists = await User.findOne({ email });
 
@@ -15,6 +17,11 @@ router.post("/signUp", async (req, res) => {
       res.status(401).json({ message: "Email is already in use." });
       return;
     }
+
+    const password = generator.generate({
+    length: 8,
+    numbers: true
+    });
 
     sendEmail(email, "Welcome to our site!", `Your password is ${password}`);
 
@@ -27,7 +34,7 @@ router.post("/signUp", async (req, res) => {
     const user = new User({
       name,
       email,
-      password: hashedPassword,
+      password : hashedPassword
     });
     await user.save();
     res.send("Sign Up Routes");
@@ -65,7 +72,7 @@ router.post("/login", async (req, res) => {
 });
 
 router.post("/logout", (req, res) => {
-  res.clearCookie("token");
+  res.clearCookie("user-token");
   res.send("Logout");
 });
 

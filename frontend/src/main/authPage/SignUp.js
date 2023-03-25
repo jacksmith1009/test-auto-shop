@@ -22,9 +22,6 @@ const schema = Yup.object().shape({
   email: Yup.string()
     .required("*Email is a required field")
     .email("Invalid email format"),
-  password: Yup.string()
-    .required("*Password is a required field")
-    .min(8, "*Password must be at least 8 characters"),
 });
 
 function Copyright(props) {
@@ -54,7 +51,7 @@ const SignUp = () => {
       {/* Wrapping form inside formik tag and passing our schema to validationSchema prop */}
       <Formik
         validationSchema={schema}
-        initialValues={{ name: "", email: "", password: "" }}
+        initialValues={{ name: "", email: "", }}
         onSubmit={async (values) => {
           const response = await axios.post(
             "http://localhost:5000/api/auth/signUp",
@@ -65,7 +62,6 @@ const SignUp = () => {
             // clear the form
             values.name = "";
             values.email = "";
-            values.password = "";
             // redirect to success page
             navigate("/success");
           }
@@ -167,25 +163,6 @@ const SignUp = () => {
                     {/* If validation is not passed show errors */}
                     <Typography style={{ color: "red" }}>
                       {errors.email && touched.email && errors.email}
-                    </Typography>
-                    <TextField
-                      margin="normal"
-                      required
-                      fullWidth
-                      name="password"
-                      label="Password"
-                      onChange={(e) => {
-                        setFieldValue("password", e.target.value);
-                      }}
-                      onBlur={handleBlur}
-                      value={values.password}
-                      type="password"
-                      id="password"
-                      autoComplete="current-password"
-                    />
-                    {/* If validation is not passed show errors */}
-                    <Typography style={{ color: "red" }}>
-                      {errors.password && touched.password && errors.password}
                     </Typography>
 
                     <Button
