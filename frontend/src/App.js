@@ -6,6 +6,9 @@ import LoginPage from "./main/authPage/LoginPage";
 import JwtShow from "./main/Advertisement/JwtShow";
 import SuccessSignUp from "./main/Advertisement/SuccessSignUp";
 import ProtectedRoutes from "./main/protectedRoutes/ProtectedRoutes";
+import NavBar from "./globalComponents/NavBar";
+import Sidebar from "./globalComponents/Sidebar";
+import AddVehicleForm from "./components/AddVehicleForm";
 
 export default function App() {
   return (
@@ -13,6 +16,10 @@ export default function App() {
       <Route path="/" element={<SignUp />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/success" element={<SuccessSignUp />} />
+      <Route path="/navbar" element={< NavBar/>} />
+      <Route path="/sidebar" element={< Sidebar/>} />
+      <Route path="/add-car" element={< AddVehicleForm/>} />
+      
       <Route
         path="/jwt"
         element={
